@@ -4,9 +4,6 @@ package runPackege;
 
 import bin.bank.Bank;
 import bin.client.Client;
-import bin.client.Gold;
-import bin.client.Platinum;
-import bin.client.Regular;
 import myLabrairy.MyUtil;
 
 import static java.lang.System.out;

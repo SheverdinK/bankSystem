@@ -2,10 +2,7 @@
 
 package bin.client;
 
-import bin.bank.Bank;
-import myLabrairy.MyUtil;
-
-import static java.lang.System.out;
+import bin.log.Log;
 
 public abstract class Client {
     public Account[] accountArr = new Account[5];
@@ -13,14 +10,19 @@ public abstract class Client {
     private String name;
     private float balance;
 
-    public Client (int id, int nId) throws Exception {
-        MyUtil myUtil = new MyUtil ();
-        if ( myUtil.isId (id,nId)) {
-            this.id = id;
-            System.out.println ("id = " +this.id);
-        } else {
-           throw new Exception (">>>>>>>> Wrong ID. Try again!!! <<<<<<<<<<<<<<<");
-        }
+    public Client (int id){
+        this.id = id;
+    }
+
+    public Client (int id, int nId)  {
+//        MyUtil myUtil = new MyUtil ();
+
+//        if ( myUtil.isId (id,nId)) {
+        this.id = id;
+//            System.out.println ("id = " +this.id);
+//        } else {
+//           throw new Exception (">>>>>>>> Wrong ID. Try again!!! <<<<<<<<<<<<<<<");
+//        }
     }
 
     public Client (int id, String name, float balance) {
@@ -39,7 +41,8 @@ public abstract class Client {
         return name;
     }
     public Account getAccount ( int index){
-        return accountArr[index] != null ? accountArr[index] : null;
+        if (accountArr[index] != null) return accountArr[index];
+        else return null;
     }
 
     public void setName (String name) {
@@ -50,39 +53,28 @@ public abstract class Client {
     }
 
     public void addAccount (Account account) {
-        Bank bank = Bank.getBank ();
-        Client[] clients = bank.getClients ();
-        MyUtil myUtil = new MyUtil ();
-
         System.out.println("***IN addAccount**** id = " + id);
-        int i = 0;
-        while (i < clients.length) {                                             // Loop to find the client with ID
-            if (clients[i] != null) {
-                if (clients[i].getId () == id) {
-                    int index = i;
-                    out.println ("Client is Found: index =  " + index);
-                    int numberOfAccount = 0;                                     // Loop to find the Account not NULL
-                    for (int j = 0; j < clients[i].accountArr.length; j++) {
-                        if (clients[index].accountArr[j] == null) {
-                            out.println ("Check is accountArr is NULL");
-                            out.println ("j = " + j);
-//                            clients[index].accountArr[j] = new Account (0, 0);
-                            clients[index].accountArr[j] = new Account (account.getId (), account.getBalance ());
-                            String discriptionAccount = "ACCOUNT ADDED ";
-                            /*Log logAccount = new Log (account.getId (), discriptionAccount, account.getBalance ());
-                            out.println (logAccount.getData ());*/
-                            numberOfAccount = j + 1;
-                            j = clients[i].accountArr.length;
-                        }
-                    }
-                    if (numberOfAccount == 0 || numberOfAccount == 5)
-                        out.println (" ***ERROR*** --- You Have already 5  Accounts");
-                    i = clients.length;
-                } else i++;
-            } else i++;
+
+        int numberOfAccount = 5;
+        for (int i = 0; i < accountArr.length; i++) {     // Loop to find the Account is NULL
+            if (accountArr[i] == null) {
+                accountArr[i] = new Account (account.getId (), account.getBalance ());
+                String descriptionAccount = "ACCOUNT ADDED ";
+                System.out.println (Log.getData (accountArr[i].getId (),
+                        descriptionAccount ,
+                        accountArr[i].getBalance (),
+                        getClass ().getSimpleName ()));
+                numberOfAccount = numberOfAccount -1;
+                break;
+            }
+        }
+        if (numberOfAccount == 0 || numberOfAccount == 5)  {
+            System.out.println (" ***ERROR*** --- You Have already 5  Accounts");
         }
     }
-    public void removeAccount ( Client client){
+    public void removeAccount ( Account account){
+
+        System.out.println ("ACCOUNT REMOVED");
     }
 
     @Override
@@ -101,7 +93,7 @@ public abstract class Client {
                 + "  id= "  + getId ()
                 + ", name= " + getName ()
                 + ", balance= " + getBalance ()
-                + ", Type of Client is :" + getClass().getName() +  "}";
+                + ", Type of Client is :" + getClass().getSimpleName () +  "}";
     }
 }
 

@@ -1,4 +1,4 @@
-/** all right recieved  @ Sheverdin Konstantin  */
+/** all right received  @ Sheverdin Konstantin  */
 
 package myLabrairy;
 

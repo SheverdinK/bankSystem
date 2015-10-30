@@ -40,9 +40,9 @@ public class Log {
         setClientType(clientType);
 
         return "Client ID:  >>" + getClientId()
-                + "<<  Description: >>" + getDescription()
-                + "<<   amount:  >>" + getAmount() + "<<"
-                + "Type of Client is : " + getClientType();
+                + " <<  Description: >> " + getDescription()
+                + " <<   amount:  >> " + getAmount() + "<<"
+                + " Type of Client is :  " + getClientType();
     }
 
     public static void setDescription (String description) {

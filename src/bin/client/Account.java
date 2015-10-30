@@ -1,4 +1,4 @@
-/** all right recieved  @ Sheverdin Konstantin  */
+/** all right received  @ Sheverdin Konstantin  */
 
 package bin.client;
 
@@ -7,6 +7,10 @@ public class Account {
 
 	private  int id;
 	private float balance;
+
+	public Account (int id) {
+		this.id = id;
+	}
 
 	public Account(int id, float balance) {
 		this.id = id;
@@ -33,4 +37,7 @@ public class Account {
 		}
 		return  false;
 	}
+
+
+
 }

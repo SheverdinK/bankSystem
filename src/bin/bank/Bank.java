@@ -5,12 +5,10 @@ package bin.bank;
 import bin.client.Client;
 import bin.log.Log;
 
-import static java.lang.System.out;
-
 public class Bank {
 
     private static Bank bank;
-    static final   int  numberOfClient = 100;
+    private static final   int  numberOfClient = 100;
     float balance;
     Client [] clients;
 
@@ -20,13 +18,18 @@ public class Bank {
 
     public static Bank getBank () {
         if (bank == null) {
-            out.println ("Bank == NULL");
+            System.out.println ("Bank == NULL");
             return bank = new Bank ();
         }
         else       {
-            out.println ("BANK ! =  null");
+            System.out.println ("BANK ! =  null");
             return bank;
         }
+    }
+
+    public float getBalance () {
+        System.out.println ("Get Balance");
+        return 123f;
     }
 
     public void addClient (Client client) {     // Add One Client
@@ -39,28 +42,34 @@ public class Bank {
                 i = clients.length;
             }
         }
-        out.print (" index = " + index + " *** ");
-        out.println (Log.getData (clients[index].getId (), description, clients[index].getBalance (),client.getClass ().getName () ));
+        System.out.print (" index = " + index + " *** ");
+        System.out.println (Log.getData (clients[index].getId (), description, clients[index].getBalance (), client.getClass ().getName ()));
     }           // For real Program
 
     public void removeClients (Client client) {
         String description = "CLIENT REMOVED";
 
         int i = 0;
+        boolean isFound = false;
         while (i < clients.length) {
             if (clients[i] != null) {
-                System.out.println("!!!Remove!!!! Id = " + clients[i].getId());
                 if (clients[i].equals(client)) {
-                    out.println (Log.getData (
-                                    clients[i].getId (), description,
-                                    clients[i].getBalance (),
-                                    clients[i].getClass ().getName ()));
+                    System.out.println (Log.getData (
+                            clients[i].getId (), description,
+                            clients[i].getBalance (),
+                            clients[i].getClass ().getName ()));
                     clients[i] = null;
-                    i = clients.length;
+                    isFound = true;
+                    break;
+//                  i = clients.length;
                 }
             }
             i++;
         }
+        if (!isFound) {
+            System.out.println ("ID IS NOT FOUND !!! TRY AGAIN");
+        }
+        System.out.println (" ------  Remove  Another Client ? ---------");
     }
 
     public void addClient (Client client, int i) {      //  Create Random Array of  Client
@@ -77,43 +86,25 @@ public class Bank {
             else i=0;
         }
         String description = " Client Random ADDED " ;
-        out.print (" index = " + index + " *** ");
-        out.println (Log.getData (
+        System.out.print (" index = " + index + " *** ");
+        System.out.println (Log.getData (
                         clients[index].getId (),
                         description,
                         clients[index].getBalance (),
-                        client.getClass ().getName ())
-                 );
+                        client.getClass ().getSimpleName ())
+        );
     }   // For Random Program
 
     public Client[] getClients () {
-        String description = "Get Client";
-        int i = 0;
-        while (i < clients.length) {
-            if (clients[i] != null) {
-//                System.out.println ("LOG Get Client: ");
-//                out.print (" index = " + i + " *** ");
-                /*out.println (Log.getData (
-                        clients[i].getId (),
-                        "GET CLIENT",
-                        clients[i].getBalance (),
-                        clients[i].getClass ().getName ()));*/
-            }
-            i++;
-        }
         return  clients;
     }
 
-    public float getBalance () {
-        out.println ("Get Balance");
-        return 123f;
-    }
 
-
-    /* public void printClientArray () {
-         out.println ("**************  Print Client Array  ************************ ");
+    /* public void printClientList () {
+         System.out.println ("**************  Print Client List ************************ ");
          for (int i = 0; i < clients.length; i++) {
-             out.println ("i= " + i + "  id: " + clients[i].getId () + " Name: " + clients[i].getName () + " Balance: " + clients[i].getBalance ());
+
+//             System.out.println ("i= " + i + "  id: " + clients[i].getId () + " Name: " + clients[i].getName () + " Balance: " + clients[i].getBalance ());
          }
      }*/
 

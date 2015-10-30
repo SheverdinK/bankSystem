@@ -1,4 +1,4 @@
-/** all right recieved  @ Sheverdin Konstantin  */
+/** all right received  @ Sheverdin Konstantin  */
 
 package bin.log;
 
@@ -10,7 +10,7 @@ public class Logger {
     }
 
     public void log (Log log) {
-        System.out.println ("---------------------- Metod Log---------------------------------");
+        System.out.println ("---------------------- Method Log---------------------------------");
 
     }
 

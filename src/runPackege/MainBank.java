@@ -18,11 +18,12 @@ public class MainBank {
 
  /*                                         Run Real program
         ------------------------------------------------------------------------      */
-        boolean flagMainmenu = true;
+        boolean flagMainMenu = true;
         BankMenu bankMenu = new BankMenu ();
-        while (flagMainmenu) {
+
+        while (flagMainMenu) {
             ToExit myUtil = new ToExit ();
-            flagMainmenu = bankMenu.mainMenu (myUtil, bank);
+            flagMainMenu = bankMenu.mainMenu (myUtil, bank);
         }
 
 

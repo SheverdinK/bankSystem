@@ -1,4 +1,4 @@
-/** all right recieved  @ Sheverdin Konstantin  */
+/** all right received  @ Sheverdin Konstantin  */
 
 
 package myLabrairy;
@@ -41,10 +41,6 @@ public class MyUtil {
     }
 
     public boolean isId (int id, int n)  {
-        System.out.println ("id = " + id);
-        System.out.println ("n = " + n);
-        boolean idIsNdigit = false;
-        int   tempId = 0;
 
         int nDigitMinTemp=1, nDigitMin=0, nDigitMax=0 ;
         for (int i = 1; i < n ; i++) {
@@ -57,15 +53,15 @@ public class MyUtil {
         nDigitMax += 9;
         System.out.println ("nDigitMin = " + nDigitMin);
         System.out.println ("nDigitMax = " + nDigitMax);
-       if (id <= nDigitMin || id >= nDigitMax){
-           System.out.println (" FAlSE ");
-           return  false;
+        if (id <= nDigitMin || id >= nDigitMax){
+            System.out.println (" FAlSE ");
+            return  false;
 //           throw new Exception (">>>>>>>>>>  Invalid ID. Try again <<<<<<<<<<<<");
-       }
+        }
         else {
-           System.out.println ("TRUE");
-           return true;
-       }
+            System.out.println ("TRUE");
+            return true;
+        }
     }
 
     public Client getTypeOfClient (int id, String name, float balance) {
