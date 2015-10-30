@@ -1,4 +1,4 @@
-/** all right recieved  @ Sheverdin Konstantin  */
+/** all right received  @ Sheverdin Konstantin  */
 
 package runPackege;
 
@@ -23,7 +23,7 @@ public class BankMenu {
                 System.out.println ("2 - REMOVE  Client");
                 System.out.println ("3 - GET  Balance");
 
-                bankMenu (myUtil, bank);
+                    bankMenu (myUtil, bank);
 
                 break;
             case 2:
@@ -41,20 +41,13 @@ public class BankMenu {
     }
 
     public void bankMenu (ToExit myUtil, Bank bank)  {
+       final  int nId = 9;
         int inBankMenu = myUtil.getInt ();
 //      int  inBankMenu = 1;
         switch (inBankMenu) {           //   MENU 1-1: BANK ( 1-Add Client; 2- Remove Client; 3 - Get Balance )
             case 1:
                 boolean flagAddClient = true;
                 while (flagAddClient) {          // Loop for Restart the "addAccount"
-                   /* out.println ("Enter ID : ");
-                    int  id = myUtil.setTempID (9);
-
-                    out.println ("Enter  NAME of the CLient : ");
-                    String name = myUtil.getString ();
-
-                    out.println ("Enter Sum of Money  to Deposit : ");
-                    float balance = myUtil.getFloat ();*/
 
                     int id = myUtil.getRandomNum (320000000, 889999999);
                     String name = "testName";
@@ -66,7 +59,7 @@ public class BankMenu {
 
                     bank.addClient (client);
 
-                    out.println (" ------  ADD Another Client ? ---------");
+                    System.out.println (" ------  ADD Another Client ? ---------");
 
                     flagAddClient = myUtil.isExit ();
                 }    // while
@@ -74,13 +67,15 @@ public class BankMenu {
             case 2:
                 boolean flagRemoveClient = true;
                 while (flagRemoveClient) {
-                    out.println ("Enter ID : ");
-                    int tempId = myUtil.getTempID();
-                    int Id = myUtil.isId(tempId, 9);
-                    Client client = new Regular (Id);
+                    Client client = null;
+                    try {
+                        System.out.println ("Enter ID : " + nId + "  Digit");
+                        client = new Client (myUtil.getTempID (), nId) {};
+                    } catch (Exception e) {
+                        System.err.print ("IN CATCH");
+                    }
                     bank.removeClients(client);
-
-                    out.println (" ------  Remove  Another Client ? ---------");
+                    System.out.println (" ------  Remove  Another Client ? ---------");
 
                     flagRemoveClient = myUtil.isExit ();
                 }
@@ -99,23 +94,35 @@ public class BankMenu {
                 while (flagAddAccount) {          // Loop for Restart the "ADD Account"
 
                     int id = myUtil.getRandomNum (10000, 99999);
-
                     float balance = myUtil.getRandomNum (100, 1000000);
 
                     Account account = new Account (id, balance);
-                    Client.addAccount (account);
-                    out.println (" ------  ADD Another Account ? ---------");
+                    Client client = null;
+                    try {
+                        client = new Regular (23,9);
+                    } catch (Exception e) {
+                        e.printStackTrace ();
+                    }
+                    client.addAccount (account);
+                    System.out.println (" ------  ADD Another Account ? ---------");
                     flagAddAccount = myUtil.isExit ();
                 }    // while
                 break;
             case 2:
                 boolean flagRemoveAccount = true;
                 while (flagRemoveAccount) {
-                    out.println ("Enter ID : ");
-                    int  id = myUtil.getTempID();
-                    Client client = new Regular (id);
+                    System.out.println (" Enter ID : " );
+
+                    Client client = null;
+                    try {
+                        client = new Regular (23,9);
+                    } catch (Exception e) {
+                        e.printStackTrace ();
+                    }
+                    Account account = new Account (1, 25);
+                    client.addAccount (account);
                     client.removeAccount(client);
-                    out.println (" ------  Remove  Another Client ? ---------");
+                    System.out.println (" ------  Remove  Another Client ? ---------");
 
                     flagRemoveAccount = myUtil.isExit ();
                 }

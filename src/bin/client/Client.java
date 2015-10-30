@@ -13,8 +13,14 @@ public abstract class Client {
     private String name;
     private float balance;
 
-    public Client (int id) {
-        this.id = id;
+    public Client (int id, int nId) throws Exception {
+        MyUtil myUtil = new MyUtil ();
+        if ( myUtil.isId (id,nId)) {
+            this.id = id;
+            System.out.println ("id = " +this.id);
+        } else {
+           throw new Exception (">>>>>>>> Wrong ID. Try again!!! <<<<<<<<<<<<<<<");
+        }
     }
 
     public Client (int id, String name, float balance) {
@@ -23,13 +29,13 @@ public abstract class Client {
         setBalance (balance);
     }
 
-    public int getId () {
+    public int     getId () {
         return id;
     }
-    public float getBalance () {
+    public float   getBalance () {
         return balance;
     }
-    public String getName () {
+    public String  getName () {
         return name;
     }
     public Account getAccount ( int index){
@@ -43,14 +49,11 @@ public abstract class Client {
         this.balance = balance;
     }
 
-    public static void addAccount (Account account) {
+    public void addAccount (Account account) {
         Bank bank = Bank.getBank ();
         Client[] clients = bank.getClients ();
         MyUtil myUtil = new MyUtil ();
 
-        out.println ("enter ID ");
-        int tempId = myUtil.getTempID();
-        int id = myUtil.isId(tempId, 9);
         System.out.println("***IN addAccount**** id = " + id);
         int i = 0;
         while (i < clients.length) {                                             // Loop to find the client with ID
