@@ -8,9 +8,9 @@ public class Regular extends  Client {
     private static final float commissionRateRate = 0.03f;  // 3 %
     private static final float dailyIR = 0.001f;       // 0.1 %
 
-    public Regular (int id, int nId){
+   /* public Regular (int id, int nId){
         super (id, nId);
-    }
+    }*/
     public Regular (int id, String name, float balance) {
         super( id, name, balance);
     }

@@ -2,27 +2,19 @@
 
 package bin.client;
 
-import bin.log.Log;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Client {
-    public Account[] accountArr = new Account[5];
+    int ensureCapacity = 5;
+   List <Account> accountList = new ArrayList<> (ensureCapacity);
+
     protected int id;
     private String name;
     private float balance;
 
     public Client (int id){
         this.id = id;
-    }
-
-    public Client (int id, int nId)  {
-//        MyUtil myUtil = new MyUtil ();
-
-//        if ( myUtil.isId (id,nId)) {
-        this.id = id;
-//            System.out.println ("id = " +this.id);
-//        } else {
-//           throw new Exception (">>>>>>>> Wrong ID. Try again!!! <<<<<<<<<<<<<<<");
-//        }
     }
 
     public Client (int id, String name, float balance) {
@@ -40,10 +32,6 @@ public abstract class Client {
     public String  getName () {
         return name;
     }
-    public Account getAccount ( int index){
-        if (accountArr[index] != null) return accountArr[index];
-        else return null;
-    }
 
     public void setName (String name) {
         this.name = name;
@@ -53,28 +41,27 @@ public abstract class Client {
     }
 
     public void addAccount (Account account) {
-        System.out.println("***IN addAccount**** id = " + id);
-
-        int numberOfAccount = 5;
-        for (int i = 0; i < accountArr.length; i++) {     // Loop to find the Account is NULL
-            if (accountArr[i] == null) {
-                accountArr[i] = new Account (account.getId (), account.getBalance ());
-                String descriptionAccount = "ACCOUNT ADDED ";
-                System.out.println (Log.getData (accountArr[i].getId (),
-                        descriptionAccount ,
-                        accountArr[i].getBalance (),
-                        getClass ().getSimpleName ()));
-                numberOfAccount = numberOfAccount -1;
-                break;
-            }
+        if (accountList.size () < ensureCapacity) {
+            accountList.add (account);
         }
-        if (numberOfAccount == 0 || numberOfAccount == 5)  {
-            System.out.println (" ***ERROR*** --- You Have already 5  Accounts");
+        else {
+            System.out.println ("SIZE IS " + accountList.size ());
         }
     }
     public void removeAccount ( Account account){
-
+        accountList.remove (account);
         System.out.println ("ACCOUNT REMOVED");
+    }
+
+    public List <Account> getAccountList () {
+        return accountList;
+    }
+    public void printAccountList (){
+        int i=1;
+        for (Account account: accountList) {
+
+            System.out.println (i++ +""+ account);
+        }
     }
 
     @Override
@@ -89,11 +76,11 @@ public abstract class Client {
 
     @Override
     public String toString () {
-        return "Client { "
-                + "  id= "  + getId ()
-                + ", name= " + getName ()
-                + ", balance= " + getBalance ()
-                + ", Type of Client is :" + getClass().getSimpleName () +  "}";
+        return
+                  " ID =   >> "     + getId ()                     + " <<"
+                + " name = >> "     + getName ()                   + " <<"
+                + " balance = >> "  + getBalance ()                + " <<"
+                + " Type:  >>"      + getClass().getSimpleName ()  + " <<\n";
     }
 }
 

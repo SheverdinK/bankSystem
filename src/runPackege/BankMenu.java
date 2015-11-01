@@ -3,18 +3,22 @@
 package runPackege;
 
 import bin.bank.Bank;
-import bin.client.*;
-import myLabrairy.MyUtil;
+import bin.client.Account;
+import bin.client.Client;
 import myLabrairy.ToExit;
 
-import static java.lang.System.out;
+import java.util.List;
+import java.util.ListIterator;
 
 public class BankMenu {
 
-    public boolean mainMenu (ToExit myUtil, Bank bank)  {
-        out.println ("------------------------ M A I N    M E N U --------------------------");
-        out.println ("1 >>>> B A N K <<<<<");
-        out.println ("2 >>>> CLIENT  <<<<<");
+    final int nClientId = 9;
+    final int nAccountId = 5;
+
+    public boolean mainMenu (ToExit myUtil, Bank bank) {
+        System.out.println ("------------------------ M A I N    M E N U --------------------------");
+        System.out.println ("1 >>>> B A N K <<<<<");
+        System.out.println ("2 >>>> CLIENT  <<<<<");
 
         int inMainMenu = myUtil.getInt ();
         switch (inMainMenu) {                  // MENU 1:   1 - BANK; 2- CLIENT
@@ -22,7 +26,7 @@ public class BankMenu {
                 System.out.println ("------------- B A N K ---------------");
                 System.out.println ("1 - ADD Client");
                 System.out.println ("2 - REMOVE  Client");
-                System.out.println ("3 - Pint Client LIST");
+                System.out.println ("3 - PRINT  Client List");
 
                 bankMenu (myUtil, bank);
 
@@ -33,7 +37,7 @@ public class BankMenu {
                 System.out.println ("2 - Remove Account");
                 System.out.println ("3 - Total  Balance");
 
-                clientMenu (myUtil, bank);
+              clientMenu (myUtil, bank);
 
                 break;
         }
@@ -42,9 +46,12 @@ public class BankMenu {
 
         return myUtil.isExit ();
     }
-    /***********    C A L L  F O R   B A N K   ******************/
-    public void bankMenu (ToExit myUtil, Bank bank)  {
-        final  int nId = 9;
+
+    /***********
+     * C A L L  F O R   B A N K
+     ******************/
+    public void bankMenu (ToExit myUtil, Bank bank) {
+
         int inBankMenu = myUtil.getInt ();
 //      int  inBankMenu = 1;
         switch (inBankMenu) {           //   MENU 1-1: BANK ( 1-Add Client; 2- Remove Client; 3 - Get Balance )
@@ -52,15 +59,16 @@ public class BankMenu {
                 boolean flagAddClient = true;
                 while (flagAddClient) {                           // Loop for Restart the "addAccount"
 
-                    int id = myUtil.getRandomNum (320000000, 889999999);
+                    int id = myUtil.getRandomNum (320000000, 579999999);   // endNumber = 899.999.999 - startNumber
                     String name = "testName";
                     float balance = myUtil.getRandomNum (100, 1000000);
 
                     Client client;
 
-                    client = myUtil.getTypeOfClient (id,  name,  balance);
+                    client = myUtil.getTypeOfClient (id, name, balance);
 
                     bank.addClient (client);
+                    bank.printClientList ();
 
                     System.out.println (" ------  ADD Another Client ? ---------");
 
@@ -70,69 +78,85 @@ public class BankMenu {
             case 2:                                                 // Remove Client
                 boolean flagRemoveClient = true;
                 while (flagRemoveClient) {
-                    Client client = null;
-                    try {
-                        System.out.println ("Enter ID : " + nId + "  Digit");
-                        client = new Client (myUtil.getTempID (), nId) {};
-                    } catch (Exception e) {
-                        System.err.print ("IN CATCH");
-                    }
-                    bank.removeClients(client);
-
-
+                    Client client;
+                    System.out.println ("Enter ID : " + nClientId + "  Digit");
+                    int id = myUtil.isId (nClientId);
+                    client = new Client (id) {
+                    };
+                    bank.removeClients (client);
+                    bank.printClientList ();
                     flagRemoveClient = myUtil.isExit ();
                 }
                 break;
             case 3:
-//                bank. printClientList ();
+                bank.printClientList ();
                 break;
         }// switch
     }
-    /***********    C A L L  F O R   C L I E N T   ******************/
-    public void clientMenu (ToExit myUtil, Bank bank)  {
+
+    /***********
+     * C A L L  F O R   C L I E N T
+     ******************/
+    public void clientMenu (ToExit myUtil, Bank bank) {
         int inClientMenu = myUtil.getInt ();
 
         switch (inClientMenu) {           //   MENU 2-1: Client ( 1-Add Account; 2- Remove Account; 3 - Total Balance )
             case 1:                                       //     ADD ACCOUNT
                 boolean flagAddAccount = true;
                 while (flagAddAccount) {                  // Loop for Restart the "ADD Account"
-
-                    int accountID = myUtil.getRandomNum (10000, 99999);
+                    int accountID = myUtil.getRandomNum (10000, 89999);
                     float balance = myUtil.getRandomNum (100, 1000000);
-                    Account account = new Account (accountID, balance);
 
-                    System.out.println ("Enter ID - 9 digit");
-                    int clientId =  myUtil.getInt ();
-                    Client [] clients = bank.getClients ();
-                    for (int i = 0; i < clients.length ; i++) {
-                        if (clients[i] != null && clientId == clients[i].getId ()) {
-                            Client client = clients[i];
-                            System.out.println ("Client is Found");
-                            System.out.println ("Client ID :" + clientId);
-                            System.out.println ("i = " + i);
-                            client.addAccount (account);
-                        }
+                    List<Client> clientsList = bank.getClientsList ();
+                    ListIterator<Client> clientIterator = clientsList.listIterator ();
+
+                      int indexId = myUtil.findClientId (nClientId,  clientIterator);
+
+                    if ( indexId >0) {
+                        Client client = clientsList.get(indexId);
+                        Account account = new Account (accountID, balance);
+                        client.addAccount (account);
+                        client.printAccountList ();
                     }
 
-                    System.out.println (" ------  ADD Another Account ? ---------");
                     flagAddAccount = myUtil.isExit ();
+                    System.out.println (" ------  ADD Another Account ? ---------");
                 }
-                break;                                    //  Remove ACCOUNT
-            case 2:
+                break;
+            case 2:                                      //  Remove ACCOUNT
                 boolean flagRemoveAccount = true;
                 while (flagRemoveAccount) {
-                    System.out.println (" Enter ID : " );
-                    MyUtil myUtil1 = new MyUtil ();
-                    Client   client = new Client (myUtil.getInt ()){};
-                    Account account = new Account (myUtil1.getInt () );
-                    client.removeAccount(account);
+
+                    List<Client> clientsList = bank.getClientsList ();
+                    ListIterator<Client> clientIterator = clientsList.listIterator ();
+
+                    int indexId = myUtil.findClientId (nClientId,  clientIterator);
+
+                    if ( indexId >= 0) {
+                        System.out.println ("indexId = " + indexId);
+                        Client client = clientsList.get(indexId);
+
+                        List<Account> accountList = client.getAccountList ();
+                        ListIterator<Account> accountIterator = accountList.listIterator ();
+                        int indexAccountId = myUtil.findAccountId (nAccountId, accountIterator);
+
+                          if ( indexAccountId >=  0 ){
+                              System.out.println ("indexAccountId = " + indexAccountId);
+                               Account account = accountList.get (indexAccountId);
+                              client.removeAccount (account);
+                              client.printAccountList ();
+                          }
+                          else System.out.println (" **** Account ID NOT FOUND ****");
+                    }
+
                     System.out.println (" ------  Remove  Another Account ? ---------");
                     flagRemoveAccount = myUtil.isExit ();
                 }
                 break;
-            case 3:
+     /*       case 3:
 //                bank.printClientList  ();
-                break;
-        }    // switch
+                break;*/
+        }
     }
 }
+

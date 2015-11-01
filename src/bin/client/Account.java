@@ -8,10 +8,6 @@ public class Account {
 	private  int id;
 	private float balance;
 
-	public Account (int id) {
-		this.id = id;
-	}
-
 	public Account(int id, float balance) {
 		this.id = id;
 		setBalance (balance);
@@ -20,6 +16,7 @@ public class Account {
 	public float getBalance () {
 		return balance;
 	}
+
 	public int getId () {
 		return id;
 	}
@@ -38,6 +35,12 @@ public class Account {
 		return  false;
 	}
 
+	@Override
+	public String toString () {
+		return ""
+				+ " ID = >> "      + getId ()       + " <<"
+				+ " balance = >> " + getBalance ()  + " <<\n";
+	}
 
 
 }
