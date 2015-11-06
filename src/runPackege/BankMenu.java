@@ -5,6 +5,7 @@ package runPackege;
 import bin.bank.Bank;
 import bin.client.Account;
 import bin.client.Client;
+import myException.MyException;
 import myLabrairy.ToExit;
 
 import java.util.List;
@@ -65,7 +66,7 @@ public class BankMenu {
 
                     Client client;
 
-                    client = myUtil.getTypeOfClient (id, name, balance);
+                    client = myUtil.setTypeOfClient (id, name, balance);
 
                     bank.addClient (client);
                     bank.printClientList ();
@@ -80,9 +81,8 @@ public class BankMenu {
                 while (flagRemoveClient) {
                     Client client;
                     System.out.println ("Enter ID : " + nClientId + "  Digit");
-                    int id = myUtil.isId (nClientId);
-                    client = new Client (id) {
-                    };
+                    int id = myUtil.getId (nClientId, "Enete ID " );
+                    client = new Client (id) {};
                     bank.removeClients (client);
                     bank.printClientList ();
                     flagRemoveClient = myUtil.isExit ();
@@ -98,9 +98,9 @@ public class BankMenu {
      * C A L L  F O R   C L I E N T
      ******************/
     public void clientMenu (ToExit myUtil, Bank bank) {
-        int inClientMenu = myUtil.getInt ();
+        int caseClientMenu = myUtil.getInt ();
 
-        switch (inClientMenu) {           //   MENU 2-1: Client ( 1-Add Account; 2- Remove Account; 3 - Total Balance )
+        switch (caseClientMenu) {           //   MENU 2-1: Client ( 1-Add Account; 2- Remove Account; 3 - Total Balance )
             case 1:                                       //     ADD ACCOUNT
                 boolean flagAddAccount = true;
                 while (flagAddAccount) {                  // Loop for Restart the "ADD Account"
@@ -109,13 +109,21 @@ public class BankMenu {
 
                     List<Client> clientsList = bank.getClientsList ();
                     ListIterator<Client> clientIterator = clientsList.listIterator ();
-
-                      int indexId = myUtil.findClientId (nClientId,  clientIterator);
+                    int idClient = myUtil.getId (nClientId, "Enter ID number");
+                    int indexId = myUtil.findClientId (idClient,  clientIterator);
 
                     if ( indexId >0) {
                         Client client = clientsList.get(indexId);
                         Account account = new Account (accountID, balance);
-                        client.addAccount (account);
+
+                        try {
+
+                            client.addAccount (account);
+                        } catch (MyException eAccount) {
+
+                            System.err.println ( eAccount.getMessage ());
+                        }
+
                         client.printAccountList ();
                     }
 
@@ -129,16 +137,16 @@ public class BankMenu {
 
                     List<Client> clientsList = bank.getClientsList ();
                     ListIterator<Client> clientIterator = clientsList.listIterator ();
-
-                    int indexId = myUtil.findClientId (nClientId,  clientIterator);
-
+                    int idClient = myUtil.getId (nClientId, "Enter ID number ");
+                    int indexId = myUtil.findClientId (idClient,  clientIterator);
                     if ( indexId >= 0) {
                         System.out.println ("indexId = " + indexId);
                         Client client = clientsList.get(indexId);
 
                         List<Account> accountList = client.getAccountList ();
                         ListIterator<Account> accountIterator = accountList.listIterator ();
-                        int indexAccountId = myUtil.findAccountId (nAccountId, accountIterator);
+                        int idAccount = myUtil.getId (nAccountId, "Enter number of Account");
+                        int indexAccountId = myUtil.findAccountId (idAccount, accountIterator);
 
                           if ( indexAccountId >=  0 ){
                               System.out.println ("indexAccountId = " + indexAccountId);

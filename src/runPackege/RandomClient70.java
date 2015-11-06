@@ -23,7 +23,7 @@ public class RandomClient70 {
             int index = myUtil.getRandomNum (0,25);      // get a random String from nameArr
             float balance = myUtil.getRandomNum (100, 1000000);
 
-            Client client = myUtil.getTypeOfClient (id,  nameArr[index],  balance);
+            Client client = myUtil.setTypeOfClient (id, nameArr[index], balance);
 
             bank.addClient (client);
         }

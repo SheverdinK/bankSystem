@@ -3,6 +3,7 @@
 package myLabrairy;
 
 import bin.client.*;
+import myException.MyException;
 
 import java.util.ListIterator;
 import java.util.Random;
@@ -26,8 +27,8 @@ public class MyUtil {
         return   startNum + numRandom.nextInt(endNum);
     }
 
-    public int isId ( int n)  {
-         int id = getInt ();
+    public boolean isId (int id, int n) throws MyException {
+
         int nDigitMinTemp=1, nDigitMin=0, nDigitMax=0 ;
         for (int i = 1; i < n ; i++) {
             nDigitMax = (nDigitMax+9)*10;
@@ -38,15 +39,14 @@ public class MyUtil {
         }
         nDigitMax += 9;
         if (id <= nDigitMin || id >= nDigitMax){
-            return  0;
-//           throw new Exception (">>>>>>>>>>  Invalid ID. Try again <<<<<<<<<<<<");
+            throw new MyException (">>>>>>>>>> After THROW.  Invalid ID. Try again <<<<<<<<<<<<");
         }
         else {
-            return id;
+            return true;
         }
     }
 
-    public Client getTypeOfClient (int id, String name, float balance) {
+    public Client setTypeOfClient (int id, String name,float balance) {
         Client client;
         if (balance < 10000) {
             client = new Regular(id, name, balance);}
@@ -57,16 +57,13 @@ public class MyUtil {
         return client;
     }
 
-    public int findClientId (int nClientId, ListIterator<Client> clientIterator) {
+    public int findClientId (int id, ListIterator<Client> clientIterator) {
         boolean isFound = false;
         int i = 0;
 
-        System.out.println ("Enter ID - " + nClientId + " digit");
-        int tempId = this.isId (nClientId);
-
         while (clientIterator.hasNext ()) {
             Client client = clientIterator.next ();
-            if (client.getId () == tempId) {
+            if (client.getId () == id) {
                 isFound = true;
                 break;
             }
@@ -79,16 +76,14 @@ public class MyUtil {
         return i;
     }
 
-    public int findAccountId (int nAccountId, ListIterator<Account> accountIterator) {
+    public int findAccountId (int id, ListIterator<Account> accountIterator) {
         boolean isFound = false;
         int i = 0;
 
-        System.out.println ("Enter Account  ID - " + nAccountId + " digit");
-        int tempId = this.isId (nAccountId);
 
         while (accountIterator.hasNext ()) {
             Account account = accountIterator.next ();
-            if (account.getId () == tempId) {
+            if (account.getId () == id) {
                 isFound = true;
                 break;
             }
@@ -99,6 +94,22 @@ public class MyUtil {
             i= (-1);
         }
         return i;
+    }
+    public  int getId (int nClientId, String printMessage) {
+        int id = 0;
+        boolean isId = false;
+        while (!isId) {
+            try {
+                System.out.println (printMessage);
+                id = getInt ();
+                isId = isId (id, nClientId);
+            }
+            catch (MyException eId) {
+
+                System.out.println( eId.getMessage());
+            }
+        }
+        return id;
     }
 
 }

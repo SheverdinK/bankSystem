@@ -2,11 +2,13 @@
 
 package bin.client;
 
+import myException.MyException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Client {
-    int ensureCapacity = 5;
+   private int ensureCapacity = 5;
    List <Account> accountList = new ArrayList<> (ensureCapacity);
 
     protected int id;
@@ -40,12 +42,13 @@ public abstract class Client {
         this.balance = balance;
     }
 
-    public void addAccount (Account account) {
+    public void addAccount (Account account) throws MyException {
         if (accountList.size () < ensureCapacity) {
             accountList.add (account);
         }
         else {
-            System.out.println ("SIZE IS " + accountList.size ());
+            throw new MyException (" ERROR !!! >>>>> Maximum of Account for One Client <<<<  " + accountList.size ());
+
         }
     }
     public void removeAccount ( Account account){
