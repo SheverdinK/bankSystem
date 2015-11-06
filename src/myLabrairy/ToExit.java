@@ -2,9 +2,9 @@
 
 package myLabrairy;
 
-public class ToExit extends MyUtil {
+public class ToExit extends Util {
 
-    MyUtil symbol = new MyUtil ();
+    Util symbol = new Util ();
 
     public boolean isExit () {
         System.out.println ("Press 'Y' to continue or ANY  to exit");

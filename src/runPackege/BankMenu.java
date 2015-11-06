@@ -5,7 +5,8 @@ package runPackege;
 import bin.bank.Bank;
 import bin.client.Account;
 import bin.client.Client;
-import myException.MyException;
+import bankException.IdException;
+import bin.log.LoggerFile;
 import myLabrairy.ToExit;
 
 import java.util.List;
@@ -15,13 +16,16 @@ public class BankMenu {
 
     final int nClientId = 9;
     final int nAccountId = 5;
+    ToExit myUtil = new ToExit();
+
+    public int setMenu () {return    myUtil.getInt ();}
 
     public boolean mainMenu (ToExit myUtil, Bank bank) {
+       int inMainMenu = setMenu ();
         System.out.println ("------------------------ M A I N    M E N U --------------------------");
         System.out.println ("1 >>>> B A N K <<<<<");
         System.out.println ("2 >>>> CLIENT  <<<<<");
 
-        int inMainMenu = myUtil.getInt ();
         switch (inMainMenu) {                  // MENU 1:   1 - BANK; 2- CLIENT
             case 1:
                 System.out.println ("------------- B A N K ---------------");
@@ -53,7 +57,7 @@ public class BankMenu {
      ******************/
     public void bankMenu (ToExit myUtil, Bank bank) {
 
-        int inBankMenu = myUtil.getInt ();
+        int inBankMenu = setMenu ();
 //      int  inBankMenu = 1;
         switch (inBankMenu) {           //   MENU 1-1: BANK ( 1-Add Client; 2- Remove Client; 3 - Get Balance )
             case 1:                                               //  ADD Client
@@ -89,7 +93,9 @@ public class BankMenu {
                 }
                 break;
             case 3:
-                bank.printClientList ();
+//                bank.printClientList ();
+                LoggerFile loggerFile = new LoggerFile ();
+
                 break;
         }// switch
     }
@@ -119,7 +125,7 @@ public class BankMenu {
                         try {
 
                             client.addAccount (account);
-                        } catch (MyException eAccount) {
+                        } catch (IdException eAccount) {
 
                             System.err.println ( eAccount.getMessage ());
                         }

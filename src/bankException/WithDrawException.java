@@ -1,4 +1,4 @@
-package bin.exception;
+package bankException;
 
 public class WithDrawException extends  Exception{
     private int clientID;

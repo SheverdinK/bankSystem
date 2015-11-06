@@ -3,13 +3,13 @@
 package myLabrairy;
 
 import bin.client.*;
-import myException.MyException;
+import bankException.IdException;
 
 import java.util.ListIterator;
 import java.util.Random;
 import java.util.Scanner;
 
-public class MyUtil {
+public class Util {
 
     Scanner scanner = new Scanner(System.in);
     Random numRandom = new Random ();
@@ -27,7 +27,7 @@ public class MyUtil {
         return   startNum + numRandom.nextInt(endNum);
     }
 
-    public boolean isId (int id, int n) throws MyException {
+    public boolean isId (int id, int n) throws IdException {
 
         int nDigitMinTemp=1, nDigitMin=0, nDigitMax=0 ;
         for (int i = 1; i < n ; i++) {
@@ -39,7 +39,7 @@ public class MyUtil {
         }
         nDigitMax += 9;
         if (id <= nDigitMin || id >= nDigitMax){
-            throw new MyException (">>>>>>>>>> After THROW.  Invalid ID. Try again <<<<<<<<<<<<");
+            throw new IdException (">>>>>>>>>> Invalid ID. Try again <<<<<<<<<<<<");
         }
         else {
             return true;
@@ -95,16 +95,17 @@ public class MyUtil {
         }
         return i;
     }
-    public  int getId (int nClientId, String printMessage) {
+
+    public  int getId (int nClientId, String message) {
         int id = 0;
         boolean isId = false;
         while (!isId) {
             try {
-                System.out.println (printMessage);
+                System.out.println (message);
                 id = getInt ();
                 isId = isId (id, nClientId);
             }
-            catch (MyException eId) {
+            catch (IdException eId) {
 
                 System.out.println( eId.getMessage());
             }

@@ -2,25 +2,25 @@
 
 package bin.client;
 
-import myException.MyException;
+import bankException.IdException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Client {
+public abstract class Client implements Serializable {
    private int ensureCapacity = 5;
    List <Account> accountList = new ArrayList<> (ensureCapacity);
 
     protected int id;
-    private String name;
-    private float balance;
+    protected String name;
+    protected float balance;
 
     public Client (int id){
         this.id = id;
     }
-
     public Client (int id, String name, float balance) {
-        this.id = id;
+        this(id);
         setName (name);
         setBalance (balance);
     }
@@ -35,21 +35,18 @@ public abstract class Client {
         return name;
     }
 
-    public void setName (String name) {
+    protected void setName (String name) {
         this.name = name;
     }
-    public void setBalance (float balance) {
+    protected void setBalance (float balance) {
         this.balance = balance;
     }
 
-    public void addAccount (Account account) throws MyException {
-        if (accountList.size () < ensureCapacity) {
+    public void addAccount (Account account) throws IdException {
+        if (accountList.size () < ensureCapacity)
             accountList.add (account);
-        }
-        else {
-            throw new MyException (" ERROR !!! >>>>> Maximum of Account for One Client <<<<  " + accountList.size ());
-
-        }
+        else
+            throw new IdException (" E R R O R !!! >>>>> Maximum of Account for One Client <<<<  " + accountList.size ());
     }
     public void removeAccount ( Account account){
         accountList.remove (account);

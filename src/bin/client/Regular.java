@@ -3,7 +3,9 @@
 package bin.client;
 
 
-public class Regular extends  Client {
+import java.io.Serializable;
+
+public class Regular extends  Client implements Serializable {
 
     private static final float commissionRateRate = 0.03f;  // 3 %
     private static final float dailyIR = 0.001f;       // 0.1 %

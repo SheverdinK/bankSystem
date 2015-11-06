@@ -2,7 +2,9 @@
 
 package bin.client;
 
-public class Platinum extends  Client {
+import java.io.Serializable;
+
+public class Platinum extends  Client implements Serializable {
 
     private final float commissionRate = 0.01f;  // 1 %
     private final float dailyIR = 0.005f;       // 0.5 %

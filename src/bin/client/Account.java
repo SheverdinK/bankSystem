@@ -21,7 +21,7 @@ public class Account {
 		return id;
 	}
 
-	public void setBalance(float balance) {
+	private void setBalance(float balance) {
 		this.balance = balance;
 	}
 

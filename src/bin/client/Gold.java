@@ -2,7 +2,9 @@
 
 package bin.client;
 
-public class Gold extends  Client {
+import java.io.Serializable;
+
+public class Gold extends  Client implements Serializable {
 
     private final float commissionRate = 0.02f;    // 2 %
     private final float dailyIR = 0.003f;         // 0.3 %
