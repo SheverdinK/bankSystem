@@ -21,11 +21,11 @@ public class UtilTest extends Util {
         boolean isId = false;
             try {
                 System.out.println (message + " ID = " + id);
-                isId = isId (id, nClientId);
-
+               isId (id, nClientId);
             }
             catch (IdException eId) {
                 System.out.println( eId.getMessage());
             }
         }
 }
+
